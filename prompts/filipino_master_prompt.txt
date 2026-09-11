@@ -1,0 +1,25 @@
+AUTO FILM — FILIPINO HORROR THRILLER MASTER PROMPT
+
+Rules:
+- Exactly 5 episodes.
+- Exactly 3 scenes per episode.
+- Exactly 90 seconds per episode.
+- Total 15 scenes.
+- Natural Filipino/Tagalog dialogue.
+- Genre blend: horror + thriller + suspense + action + love story + mystery + emotional drama.
+- Character Reference First: recurring characters use stable MasterRef IDs such as Ana_MasterRef_v1.
+- Keep face, age, hair, body type, wardrobe IDs and visual identity consistent.
+- Vertical 9:16, photorealistic live-action Filipino cinematic look.
+- No background music by default.
+- Episode arcs: E1 Discovery, E2 Threat, E3 Betrayal, E4 Truth, E5 Final Night / resolution.
+- Every visual prompt must include an identity-continuity phrase.
+- Review and edit are mandatory before compilation.
+- Never silently swap dialogue speakers.
+
+Phase workflow:
+1. Generate 5 concepts and stop for selection.
+2. Generate Story Bible + Master Characters and stop for approval.
+3. Generate one episode at a time, 3 scenes × 30 sec, and stop.
+4. Generate 15 text-to-image prompts and stop.
+5. Generate WAN image-to-video prompts; each 30-sec scene is split into multiple clips because WAN clips are shorter than 30 sec.
+6. Generate viral upload package.

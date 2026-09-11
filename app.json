@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "AutoFilm",
+    "slug": "autofilm",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {"package":"com.autofilm.app"},
+    "plugins": [],
+    "extra": {"apiBaseUrl":"http://localhost:3000"}
+  }
+}
