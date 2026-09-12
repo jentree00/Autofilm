@@ -53,3 +53,7 @@ The video architecture targets Wan 2.7 image-to-video. A 30-second AutoFilm scen
 ## Package
 
 Android package: `com.autofilm.app`
+
+
+### v4 build fix
+The GitHub Actions workflow does not enable Gradle caching during setup-java. Gradle cache setup requires an existing Gradle project, but Expo prebuild creates the Android/Gradle project later in the job. This prevents the `No file ... *.gradle*` cache-path failure.

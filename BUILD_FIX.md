@@ -27,3 +27,7 @@ The workflow now:
 No `EXPO_TOKEN` secret is required for this MVP APK workflow.
 
 If you later want EAS cloud builds, add `EXPO_TOKEN` and use the EAS workflow separately.
+
+
+### v4 build fix
+The GitHub Actions workflow does not enable Gradle caching during setup-java. Gradle cache setup requires an existing Gradle project, but Expo prebuild creates the Android/Gradle project later in the job. This prevents the `No file ... *.gradle*` cache-path failure.
