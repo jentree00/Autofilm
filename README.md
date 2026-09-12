@@ -1,42 +1,55 @@
-# AutoFilm — MVP APK Build
+# AutoFilm MVP
 
-Netflix-inspired dark cinematic Filipino AI short-film creator.
+Netflix-inspired Filipino cinematic AI short-film/series creator.
 
-## Included in this build
+## Current MVP
+
 - No login
 - No user-facing credits
-- Home / Projects / Characters / Templates / Profile
-- New Project → Genre → 5 concepts → Story Bible → Storyboard
-- 15-scene structure (5 episodes × 3 scenes)
-- Character MasterRef + wardrobe continuity data model
-- Mandatory Review & Edit workflow
-- Speaker-tagged dialogue + dialogue QA gate
-- WAN image-to-video integration stub (backend)
-- Mock mode for APK testing without API keys
-- EAS Android APK profile
+- Dark cinematic UI
+- New Project flow
+- Genre selection
+- AI story concept flow (mock-ready)
+- Story Bible / Character MasterRef model
+- 5 episodes × 3 scenes = 15 scenes
+- Mandatory Review & Edit flow
+- Dialogue speaker QA
+- Scene-level regeneration hooks
+- WAN 2.7 image-to-video adapter architecture
+- Mock mode for APK testing without provider credentials
+- Android APK build through GitHub Actions
 
-## Run locally
-1. Install Node.js 20+.
-2. `npm install`
-3. `npx expo start`
-4. Test on Expo Go or Android emulator.
+## APK build — no Expo token required
 
-## Build APK
-1. `npm install -g eas-cli`
-2. `eas login`
-3. `eas build --platform android --profile preview`
+This version builds the native Android project directly on the GitHub runner. You do **not** need `EXPO_TOKEN` just to produce the MVP APK.
 
-## Backend
-`cd server && npm install && cp .env.example .env && npm run dev`
+1. Upload/push the `autofilm-build` folder to your GitHub repository.
+2. Open **Actions**.
+3. Select **Build Android APK**.
+4. Select **Run workflow**.
+5. Wait for the workflow to finish.
+6. Open the completed workflow run and download the artifact named **AutoFilm-debug-release-apk**.
 
-The mobile app can run entirely in mock mode while backend/provider keys are being prepared.
+The workflow runs:
 
-## Security
-OpenAI and Alibaba/Wan keys belong only on the backend. Never ship provider keys inside the APK.
+`npm install → expo prebuild → Gradle assembleRelease → upload APK`
 
-## APK Build Fix (September 2026)
+## Why EAS was removed from the default APK workflow
 
-The included GitHub Actions workflow no longer uses npm dependency caching, so the
-first MVP build does not fail when `package-lock.json` is not present. It uses Node 24
-and installs dependencies with `npm install --no-audit --no-fund` before running EAS.
-See `BUILD_FIX.md` for the exact build steps.
+EAS Build requires an Expo account and authentication token in CI. That was the blocker shown by GitHub Actions. The MVP now uses a direct Android/Gradle build so APK testing can proceed without an Expo account.
+
+`eas.json` is retained for a future EAS/cloud-build option.
+
+## Provider credentials
+
+Do not put OpenAI, Alibaba/WAN, or other provider API keys inside the APK. They belong on a secure backend/server and should be stored as GitHub/backend secrets.
+
+See `.env.example` and `server/.env.example` for placeholders.
+
+## WAN 2.7
+
+The video architecture targets Wan 2.7 image-to-video. A 30-second AutoFilm scene is designed to be assembled from multiple WAN clips because individual WAN generations are shorter than the full 30-second scene.
+
+## Package
+
+Android package: `com.autofilm.app`

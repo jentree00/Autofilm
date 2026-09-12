@@ -1,36 +1,29 @@
-# AutoFilm APK Build Fix
+# AutoFilm APK Build Fix — v3
 
-## Fixed issue
+## Fixed in this build
 
-The GitHub Actions workflow previously used `actions/setup-node@v4` with `cache: npm`.
-GitHub Actions then required a committed dependency lock file (`package-lock.json`,
-`npm-shrinkwrap.json`, or `yarn.lock`) before it could continue.
+### 1. Missing npm lock file
+The GitHub Actions workflow no longer uses `cache: npm`, so a missing `package-lock.json` does not stop `actions/setup-node`.
 
-This MVP package does not depend on a lock file yet, so the workflow now:
+### 2. EAS authentication blocker
+The previous workflow ran:
 
-- uses Node 24;
-- removes `cache: npm`;
-- runs `npm install --no-audit --no-fund` directly;
-- continues with Java 17 and EAS APK build.
+`eas build --platform android --profile preview --non-interactive`
 
-## Required GitHub secret
+That requires an Expo account plus `EXPO_TOKEN` in GitHub Actions. The new default workflow does not call EAS.
 
-Add this repository secret:
+### 3. Direct Android APK build
+The workflow now:
 
-`EXPO_TOKEN`
+1. Installs Node 24.
+2. Installs Java 17.
+3. Installs Expo dependencies.
+4. Runs `expo prebuild --platform android`.
+5. Runs Gradle `assembleRelease`.
+6. Uploads the generated APK as a GitHub Actions artifact.
 
-Do not put the token in the source code or in this ZIP.
+## GitHub
 
-## Build
+No `EXPO_TOKEN` secret is required for this MVP APK workflow.
 
-1. Extract this ZIP.
-2. Push the contents to the `main` branch of the AutoFilm GitHub repository.
-3. Open **Actions → Build Android APK**.
-4. Run **Run workflow**, or push to `main`.
-5. Wait for the EAS build to finish.
-6. Download the generated APK from the completed GitHub Actions run / EAS build page.
-
-## Important
-
-The app can be tested in its current mock/demo flow without OpenAI or WAN credentials.
-Provider keys should be added later to the secure backend, never to the APK.
+If you later want EAS cloud builds, add `EXPO_TOKEN` and use the EAS workflow separately.
