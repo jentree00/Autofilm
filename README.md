@@ -33,3 +33,10 @@ The mobile app can run entirely in mock mode while backend/provider keys are bei
 
 ## Security
 OpenAI and Alibaba/Wan keys belong only on the backend. Never ship provider keys inside the APK.
+
+## APK Build Fix (September 2026)
+
+The included GitHub Actions workflow no longer uses npm dependency caching, so the
+first MVP build does not fail when `package-lock.json` is not present. It uses Node 24
+and installs dependencies with `npm install --no-audit --no-fund` before running EAS.
+See `BUILD_FIX.md` for the exact build steps.
